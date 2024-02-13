@@ -7,6 +7,7 @@ import StyledJsxRegistry from "./registry";
 import { ThemeProvider } from "styled-components";
 
 import theme from "./global/theme";
+import { Providers } from "./Providers/providers";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -23,11 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <StyledJsxRegistry>
-          <ThemeProvider theme={theme}>
-            {children}
-          </ThemeProvider>
-        </StyledJsxRegistry>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );
