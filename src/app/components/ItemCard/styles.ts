@@ -4,13 +4,18 @@ import { MdFastfood } from "react-icons/md";
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   background-color: ${({ theme }) => theme.colors.background_header};
 
   /* margin-top: 5px; */
   /* padding: 10px; */
+`;
+
+export const Content = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const WrapperInfo = styled.div`
@@ -41,4 +46,11 @@ export const Total = styled.h3`
   font-size: 1.5vw;
 
   color: ${({ theme }) => theme.colors.success};
+`;
+
+export const StyledHr = styled.hr`
+  width: 100%;
+  border: 0;
+  border-top: 1px solid ${({ theme }) => theme.colors.text};
+  opacity: 0.5;
 `;
