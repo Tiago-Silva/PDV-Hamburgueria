@@ -1,14 +1,19 @@
+'use client'
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import StyledJsxRegistry from "./registry";
+import { ThemeProvider } from "styled-components";
 
-const inter = Inter({ subsets: ["latin"] });
+import theme from "./global/theme";
 
-export const metadata: Metadata = {
-  title: "PDV - Hamburgueria",
-  description: "PDV - para hamburgueria",
-};
+// const inter = Inter({ subsets: ["latin"] });
+
+// export const metadata: Metadata = {
+//   title: "PDV - Hamburgueria",
+//   description: "PDV - para hamburgueria",
+// };
 
 export default function RootLayout({
   children,
@@ -17,8 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <StyledJsxRegistry>{children}</StyledJsxRegistry>
+      <body>
+        <StyledJsxRegistry>
+          <ThemeProvider theme={theme}>
+            {children}
+          </ThemeProvider>
+        </StyledJsxRegistry>
       </body>
     </html>
   );
