@@ -21,9 +21,9 @@ export const Buttom = React.memo (({
 }: Props) => {
   return (
     <Container
-      borderColor={borderColor}
-      backgroundColor={backgroundColor}
-      isDisabled={isDisabled}
+      $borderColor={borderColor}
+      $backgroundColor={backgroundColor}
+      $isDisabled={isDisabled}
       {...rest}
     >
       <Title>{title}</Title>
