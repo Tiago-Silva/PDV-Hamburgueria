@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { MdFastfood } from "react-icons/md";
-import Image from "next/image";
 
 
 export const Container = styled.div`
@@ -15,29 +14,6 @@ export const Container = styled.div`
   /* margin-top: 20px; */
   /* margin-right: 20px; */
   gap: 10px;
-`;
-
-export const Imagem = styled(Image)`
-  width: 50%;
-  height: 50%;
-  flex-shrink: 0;
-`;
-
-export const WrapperIcon = styled.button`
-  position: absolute;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  top: -7%;
-  right: -10%;
-`;
-
-export const Total = styled.h3`
-  color: ${({ theme }) => theme.colors.text};
-  font-size: 1.4vw;
-  font-weight: 700;
-  right: 60%;
 `;
 
 export const Title = styled.h3`

@@ -2,14 +2,10 @@ import {
   Amount, 
   Container, 
   DefaultIcon, 
-  Imagem, 
   Title, 
-  Total, 
-  WrapperIcon
 } from "./styles";
-import React, { useEffect, useState } from "react";
-import { ItemData } from "../../interface/ItemData";
-// import { itemService } from '../../services/itemService';
+import React from "react";
+import Image from "next/image";
 
 interface Props {
   idproduto: number;
@@ -30,7 +26,14 @@ export const ProductCard = React.memo (({
   return (
     <Container>
       {urlImage ?
-        <Imagem src={urlImage} alt={title} />
+      
+        <Image
+          src={urlImage}
+          alt={title}
+          width={50}
+          height={50}
+          objectFit="cover"
+        />
         :
         <DefaultIcon name='food' />
       }
