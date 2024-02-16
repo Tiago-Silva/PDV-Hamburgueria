@@ -10,6 +10,6 @@ export const LoadContainer = styled.div`
   right: 0;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.25);
   z-index: 1;
 `;
