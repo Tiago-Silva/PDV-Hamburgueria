@@ -8,5 +8,5 @@ export interface ItemData {
   total: number;
   idproduto: number;
   idpedido?: number;
-  urlImage: '';
+  urlImage: string;
 }
