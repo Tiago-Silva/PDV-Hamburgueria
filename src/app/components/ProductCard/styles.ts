@@ -11,9 +11,8 @@ export const Container = styled.div`
   align-items: center;
   border-radius: 15px;
   background: ${({ theme }) => theme.colors.background_card};
-  /* margin-top: 20px; */
-  /* margin-right: 20px; */
   gap: 10px;
+  cursor: pointer;
 `;
 
 export const Title = styled.h3`

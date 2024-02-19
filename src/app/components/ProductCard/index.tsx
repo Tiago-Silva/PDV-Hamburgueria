@@ -13,6 +13,7 @@ interface Props {
   amount: number;
   urlImage: string;
   descricao: string;
+  handleAddItem: () => void;
 }
 
 export const ProductCard = React.memo (({
@@ -20,11 +21,12 @@ export const ProductCard = React.memo (({
   title,
   amount,
   urlImage,
-  descricao
+  descricao,
+  handleAddItem
 }: Props) => {
 
   return (
-    <Container>
+    <Container onClick={handleAddItem}>
       {urlImage ?
       
         <Image
