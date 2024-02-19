@@ -21,12 +21,14 @@ interface Props {
   itemList: ItemData[];
   total: number;
   handleOrderCancel: () => void;
+  handleConfirmOrder: () => void;
 }
 
 export const BoxToalizers = ({
   itemList,
   total,
-  handleOrderCancel
+  handleOrderCancel,
+  handleConfirmOrder
 }: Props) => {
   return (
     <Container>
@@ -63,7 +65,7 @@ export const BoxToalizers = ({
           <Buttom 
             backgroundColor='#FF872C'
             borderColor='#FF872C'
-            isDisabled={itemList.length === 0}
+            isDisabled={true}
             title='Aguardar'
           />
           <Buttom 
@@ -80,6 +82,7 @@ export const BoxToalizers = ({
           borderColor='#12A454'
           isDisabled={itemList.length === 0}
           title='Confirmar pedido'
+          onClick={handleConfirmOrder}
         />
       </Footer>
 

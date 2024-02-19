@@ -15,6 +15,7 @@ import { ProductData } from '@/app/interface/ProductData';
 import { productService } from '@/app/services/productService';
 import { Loading } from '@/app/components/Loading';
 import { itemService } from '@/app/services/itemService';
+import { pedidoservice } from '@/app/services/pedidoService';
 
 
 export const BoxFront = () => {
@@ -69,6 +70,20 @@ export const BoxFront = () => {
   const handleOrderCancel = () => {
     setItems([]);
     setTotal(0);
+    setIsLoading(false);
+  }
+
+  const handleConfirmOrder = () => {
+    setIsLoading(true);
+    const order = pedidoservice.creationPedido(
+      total,
+      'd65eee8c-2f87-4d5f-86df-173d5e09f30e',
+      'DINHEIRO',
+      itemService.converteItemDataToItemRequestDTO(items)
+    );
+
+    pedidoservice.save(order);
+    handleOrderCancel();
   }
 
   return (
@@ -123,6 +138,7 @@ export const BoxFront = () => {
         itemList={items}
         total={total}
         handleOrderCancel={handleOrderCancel}
+        handleConfirmOrder={handleConfirmOrder}
       />
       
     </Container>

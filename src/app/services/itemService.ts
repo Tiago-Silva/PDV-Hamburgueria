@@ -1,6 +1,7 @@
 import { ItemData } from "../interface/ItemData";
 import { AxiosResponse } from "axios";
 import { authenticatedAxiosInstance } from "./axiosConfig";
+import { ItemRequestDTO } from '../interface/itemRequestDTO';
 
 
 export const itemService = {
@@ -194,5 +195,14 @@ export const itemService = {
     });
     return response;
   },
+
+  converteItemDataToItemRequestDTO: (items: ItemData[]): ItemRequestDTO[] => {
+    return items.map(item => ({
+      quantidade: item.quantidade,
+      descricao: item.descricao,
+      idproduto: item.idproduto,
+      idpedido: item.idpedido,
+    }));
+  }
 
 }
