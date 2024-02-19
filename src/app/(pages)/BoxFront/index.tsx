@@ -154,6 +154,7 @@ export const BoxFront = () => {
   const [products, setProducts] = useState<ProductData[]>([]);
   const [items, setItems] = useState<ItemData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [total, setTotal] = useState(0);
 
   const getProductsByCategory = async (category: string) => {
     setIsLoading(true);
@@ -193,7 +194,9 @@ export const BoxFront = () => {
     );
     
     setItems(prevItems => {
-      return itemService.handleUpdateItems(prevItems, item);
+      const {updatedItems, total} =  itemService.handleUpdateItems(prevItems, item);
+      setTotal(total);
+      return updatedItems;
     });
   }
 
@@ -248,6 +251,7 @@ export const BoxFront = () => {
 
       <BoxToalizers 
         itemList={items}
+        total={total}
       />
       
     </Container>

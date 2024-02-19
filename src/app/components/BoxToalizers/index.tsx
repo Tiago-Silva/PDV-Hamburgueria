@@ -19,10 +19,12 @@ import { Buttom } from '../Buttom';
 
 interface Props {
   itemList: ItemData[];
+  total: number;
 }
 
 export const BoxToalizers = ({
-  itemList
+  itemList,
+  total
 }: Props) => {
   return (
     <Container>
@@ -47,7 +49,12 @@ export const BoxToalizers = ({
       <Footer>
         <FooterHeader>
           <TitleFooter>Total do pedido:</TitleFooter>
-          <Total>R$ 114,00</Total>
+          <Total>
+            {new Intl.NumberFormat('pt-BR', {
+              style: 'currency',
+              currency: 'BRL'
+            }).format(total) }
+          </Total>
         </FooterHeader>
 
         <WrapperButtons>

@@ -31,7 +31,10 @@ export const itemService = {
     if (!updatedItems.find(i => i.idproduto === item.idproduto)) {
       updatedItems.push(item);
     }
-    return updatedItems;
+
+    const total = updatedItems.reduce((sum, item) => sum + item.total, 0);
+
+    return {updatedItems, total};
   },
 
   retrieveUpdateItems: (itemsArray: ItemData[], item: ItemData) => {
