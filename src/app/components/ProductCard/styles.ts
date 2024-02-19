@@ -12,7 +12,14 @@ export const Container = styled.div`
   border-radius: 15px;
   background: ${({ theme }) => theme.colors.background_card};
   gap: 10px;
+
   cursor: pointer;
+
+  transition: box-shadow 0.8s ease;
+
+  &:active {
+    box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.5) inset;
+  }
 `;
 
 export const Title = styled.h3`

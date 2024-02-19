@@ -42,6 +42,8 @@ export const Content = styled.div`
   background-color: ${({ theme }) => theme.colors.background_header};
   gap: 16px;
   margin-top: 16px;
+
+  overflow-y: auto;
 `;
 
 export const Footer = styled.div`
