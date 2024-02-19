@@ -20,11 +20,13 @@ import { Buttom } from '../Buttom';
 interface Props {
   itemList: ItemData[];
   total: number;
+  handleOrderCancel: () => void;
 }
 
 export const BoxToalizers = ({
   itemList,
-  total
+  total,
+  handleOrderCancel
 }: Props) => {
   return (
     <Container>
@@ -61,23 +63,24 @@ export const BoxToalizers = ({
           <Buttom 
             backgroundColor='#FF872C'
             borderColor='#FF872C'
-            isDisabled={false}
+            isDisabled={itemList.length === 0}
             title='Aguardar'
           />
           <Buttom 
             backgroundColor='#E83F5B'
             borderColor='#E83F5B'
-            isDisabled={false}
+            isDisabled={itemList.length === 0}
             title='Cancelar'
+            onClick={handleOrderCancel}
           />
         </WrapperButtons>
 
         <Buttom 
-            backgroundColor='#12A454'
-            borderColor='#12A454'
-            isDisabled={false}
-            title='Confirmar pedido'
-          />
+          backgroundColor='#12A454'
+          borderColor='#12A454'
+          isDisabled={itemList.length === 0}
+          title='Confirmar pedido'
+        />
       </Footer>
 
     </Container>

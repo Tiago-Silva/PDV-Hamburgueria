@@ -66,6 +66,11 @@ export const BoxFront = () => {
     });
   }
 
+  const handleOrderCancel = () => {
+    setItems([]);
+    setTotal(0);
+  }
+
   return (
     <Container>
 
@@ -117,6 +122,7 @@ export const BoxFront = () => {
       <BoxToalizers 
         itemList={items}
         total={total}
+        handleOrderCancel={handleOrderCancel}
       />
       
     </Container>

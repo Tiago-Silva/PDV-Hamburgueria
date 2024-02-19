@@ -17,7 +17,7 @@ export const Container = styled.button<Props>`
   padding: 5px 15px;
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
   flex: 1;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
 `;
 
 export const Title = styled.h3`

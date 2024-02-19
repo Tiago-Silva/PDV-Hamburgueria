@@ -24,6 +24,7 @@ export const Buttom = React.memo (({
       $borderColor={borderColor}
       $backgroundColor={backgroundColor}
       $isDisabled={isDisabled}
+      disabled={isDisabled}
       {...rest}
     >
       <Title>{title}</Title>
