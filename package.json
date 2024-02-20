@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@tauri-apps/api": "^1.5.3",
     "axios": "^1.6.7",
     "js-base64": "^3.7.6",
