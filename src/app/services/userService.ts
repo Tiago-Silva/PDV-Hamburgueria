@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { publicAxiosInstance } from './axiosConfig';
 import { UserRegisterData } from '../interface/UserRegisterData';
-import { LoginResponseMobilleDTO } from '../interface/LoginResponseMobilleDTO';
+import { LoginResponseMobilleDTO } from '../interface/LoginResponseDTO';
 
 export const userService = {
 
