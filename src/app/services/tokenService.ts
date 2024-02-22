@@ -1,6 +1,5 @@
 import { Base64 } from 'js-base64';
 import { TokenData } from '../interface/tokenData';
-import { publicAxiosInstance } from './axiosConfig';
 
 
 const storageKey = process.env.USER_STORAGE_KEY
@@ -21,7 +20,7 @@ export const tokenService = {
   
     if (tokenStorage) {
       const tokenObject = JSON.parse(tokenStorage);
-      const parts = tokenObject.split('.');
+      const parts = tokenObject.token.split('.');
       if (parts.length !== 3) {
         throw new Error('The token is invalid');
       }
@@ -29,6 +28,18 @@ export const tokenService = {
       const decoded: TokenData = JSON.parse(Base64.decode(parts[1]));
       return decoded;
     }
+  },
+
+  isTokenExpired: async (): Promise<boolean> => {
+    const tokenData = await tokenService.retrieveTokenData();
+  
+    if (tokenData) {
+      const now = Math.floor(Date.now() / 1000);
+      
+      return tokenData.exp < now;
+    }
+
+    return true;
   },
 
 };
