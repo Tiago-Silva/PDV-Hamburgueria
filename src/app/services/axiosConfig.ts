@@ -1,8 +1,12 @@
 import axios from 'axios';
 import { API_URL } from './apiConfig';
+import { tokenService } from './tokenService';
+import { useRouter } from 'next/navigation';
 
-
-const storageKey = process.env.USER_STORAGE_KEY;
+export const redirectToHome = () => {
+  const router = useRouter();
+  router.push('/');
+};
 
 // Axios para rotas não autenticadas
 const publicAxiosInstance = axios.create({
@@ -19,7 +23,11 @@ authenticatedAxiosInstance.interceptors.request.use(
   async (config) => {
     // const { token } = useAuth();
     // Recupera o token do AsyncStorage
-    const tokenStorage = await localStorage.getItem(storageKey + 'token');
+    // if (await tokenService.isTokenExpired()) { 
+    //   redirectToHome();
+    //   throw new Error('Token expired');
+    // }
+    const tokenStorage = await tokenService.getToken();
     
     // Adiciona o token ao cabeçalho da requisição, se existir
     if (tokenStorage) {
