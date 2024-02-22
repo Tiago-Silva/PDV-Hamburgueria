@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import {
   Container, 
@@ -19,6 +19,7 @@ import { itemService } from '@/app/services/itemService';
 import { pedidoservice } from '@/app/services/pedidoService';
 import { useRouter } from 'next/navigation';
 import { tokenService } from '@/app/services/tokenService';
+import { TokenData } from '@/app/interface/tokenData';
 
 
 export default function BoxFront () {
@@ -26,12 +27,11 @@ export default function BoxFront () {
   const [items, setItems] = useState<ItemData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [total, setTotal] = useState(0);
+  const tokenData = useRef<TokenData>({} as TokenData);
   const router = useRouter();
 
   const getProductsByCategory = async (category: string) => {
     setIsLoading(true);
-
-    const tokenData = await tokenService.retrieveTokenData();
 
     if (!tokenData) {
       alert('Seção expirda, por favor faça login novamente');
@@ -40,7 +40,7 @@ export default function BoxFront () {
     }
 
     try {
-      const response = await productService.getProductsByCategory(tokenData.idestabelecimento, category);
+      const response = await productService.getProductsByCategory(tokenData.current.idestabelecimento, category);
       setProducts(response.data); 
     } finally {
       setIsLoading(false);
@@ -49,10 +49,13 @@ export default function BoxFront () {
 
   const verifyToken = async () => {
     try {
-      const token = await tokenService.getToken();
-      if (!token || token === 'undefined' || token.length < 10) {
+      const token = await tokenService.retrieveTokenData();
+      if (!token) {
         router.push('/');
+        throw new Error('Token not found');
       }
+
+      tokenData.current = token;
 
       getProductsByCategory('snacks');
     } catch (error) {
@@ -102,8 +105,6 @@ export default function BoxFront () {
   const handleConfirmOrder = async () => {
     setIsLoading(true);
 
-    const tokenData = await tokenService.retrieveTokenData();
-
     if (!tokenData) {
       alert('Seção expirda, por favor faça login novamente');
       router.push('/');
@@ -112,7 +113,7 @@ export default function BoxFront () {
 
     const order = pedidoservice.creationPedido(
       total,
-      tokenData.idUser,
+      tokenData.current.idUser,
       'DINHEIRO',
       itemService.converteItemDataToItemRequestDTO(items)
     );
@@ -174,6 +175,7 @@ export default function BoxFront () {
         total={total}
         handleOrderCancel={handleOrderCancel}
         handleConfirmOrder={handleConfirmOrder}
+        operatorName={tokenData.current.username}
       />
       
     </Container>
