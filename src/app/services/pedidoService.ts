@@ -1,6 +1,6 @@
 import { PedidoData } from "../interface/PedidoData"
 import { AxiosResponse } from 'axios';
-import { publicAxiosInstance } from './axiosConfig';
+import { authenticatedAxiosInstance } from './axiosConfig';
 import { itemService } from "./itemService";
 import { ItemRequestDTO } from "../interface/itemRequestDTO";
 import { PedidoResponseDTO } from "../interface/PedidoResponseDTO";
@@ -26,7 +26,7 @@ export const pedidoservice = {
     newOrder: PedidoData
   ) => {
     try {
-      const response = await publicAxiosInstance.post('/pedido/save', newOrder);
+      const response = await authenticatedAxiosInstance.post('/pedido/save', newOrder);
       itemService.deleteListItem();
     } catch (error) {
       console.error('Erro ao salvar o pedido:', error);
@@ -37,7 +37,7 @@ export const pedidoservice = {
   getPedidoByUserId: async (
     userId: string
   ): Promise<AxiosResponse<PedidoResponseDTO[]>> => {
-    const response = await publicAxiosInstance.get('/pedido/getPedidosByUser', {
+    const response = await authenticatedAxiosInstance.get('/pedido/getPedidosByUser', {
       headers: {
         iduser: userId
       }
