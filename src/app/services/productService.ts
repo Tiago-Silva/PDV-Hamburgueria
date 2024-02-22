@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { publicAxiosInstance } from './axiosConfig';
+import { authenticatedAxiosInstance } from './axiosConfig';
 import { ProductData } from "../interface/ProductData";
 
 
@@ -9,7 +9,7 @@ export const productService = {
   getProductsByIdEstablisment: async (
     idestabelecimento: number
   ): Promise<AxiosResponse<ProductData[]>> => {
-    const response = await publicAxiosInstance.get('/produto/getProdutos/' + idestabelecimento);
+    const response = await authenticatedAxiosInstance.get('/produto/getProdutos/' + idestabelecimento);
     return response;
   },
 
@@ -17,7 +17,7 @@ export const productService = {
     idestabelecimento: number,
     category: string
   ): Promise<AxiosResponse<ProductData[]>> => {
-    const response = await publicAxiosInstance.get('/produto/getProdutos/' + idestabelecimento + '/' + category);
+    const response = await authenticatedAxiosInstance.get('/produto/getProdutos/' + idestabelecimento + '/' + category);
     return response;
   },
 
