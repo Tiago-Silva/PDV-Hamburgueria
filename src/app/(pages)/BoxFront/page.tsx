@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from 'react';
 
 import {
@@ -16,13 +17,17 @@ import { productService } from '@/app/services/productService';
 import { Loading } from '@/app/components/Loading';
 import { itemService } from '@/app/services/itemService';
 import { pedidoservice } from '@/app/services/pedidoService';
+import { useRouter } from 'next/navigation';
+
+const storageKey = process.env.USER_STORAGE_KEY;
 
 
-export const BoxFront = () => {
+export default function BoxFront () {
   const [products, setProducts] = useState<ProductData[]>([]);
   const [items, setItems] = useState<ItemData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [total, setTotal] = useState(0);
+  const router = useRouter();
 
   const getProductsByCategory = async (category: string) => {
     setIsLoading(true);
@@ -34,8 +39,21 @@ export const BoxFront = () => {
     }
   };
 
+  const verifyToken = async () => {
+    try {
+      const token = await localStorage.getItem(storageKey + 'token');
+      if (!token || token === 'undefined' || token.length < 10) {
+        router.push('/');
+      }
+
+      getProductsByCategory('snacks');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    getProductsByCategory('snacks');
+    verifyToken();
   }, []);
 
   const handleGetProductsByCategory = (category: string) => {
