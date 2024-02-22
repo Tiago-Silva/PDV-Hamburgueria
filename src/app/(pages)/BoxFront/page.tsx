@@ -18,8 +18,7 @@ import { Loading } from '@/app/components/Loading';
 import { itemService } from '@/app/services/itemService';
 import { pedidoservice } from '@/app/services/pedidoService';
 import { useRouter } from 'next/navigation';
-
-const storageKey = process.env.USER_STORAGE_KEY;
+import { tokenService } from '@/app/services/tokenService';
 
 
 export default function BoxFront () {
@@ -31,8 +30,17 @@ export default function BoxFront () {
 
   const getProductsByCategory = async (category: string) => {
     setIsLoading(true);
+
+    const tokenData = await tokenService.retrieveTokenData();
+
+    if (!tokenData) {
+      alert('Seção expirda, por favor faça login novamente');
+      router.push('/');
+      throw new Error('Token not found');
+    }
+
     try {
-      const response = await productService.getProductsByCategory(1, category);
+      const response = await productService.getProductsByCategory(tokenData.idestabelecimento, category);
       setProducts(response.data); 
     } finally {
       setIsLoading(false);
@@ -41,7 +49,7 @@ export default function BoxFront () {
 
   const verifyToken = async () => {
     try {
-      const token = await localStorage.getItem(storageKey + 'token');
+      const token = await tokenService.getToken();
       if (!token || token === 'undefined' || token.length < 10) {
         router.push('/');
       }
@@ -91,11 +99,20 @@ export default function BoxFront () {
     setIsLoading(false);
   }
 
-  const handleConfirmOrder = () => {
+  const handleConfirmOrder = async () => {
     setIsLoading(true);
+
+    const tokenData = await tokenService.retrieveTokenData();
+
+    if (!tokenData) {
+      alert('Seção expirda, por favor faça login novamente');
+      router.push('/');
+      throw new Error('Token not found');
+    }
+
     const order = pedidoservice.creationPedido(
       total,
-      'd65eee8c-2f87-4d5f-86df-173d5e09f30e',
+      tokenData.idUser,
       'DINHEIRO',
       itemService.converteItemDataToItemRequestDTO(items)
     );
