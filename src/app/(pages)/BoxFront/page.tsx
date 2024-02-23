@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { use, useEffect, useRef, useState } from 'react';
 
 import {
   Container, 
@@ -20,6 +20,9 @@ import { pedidoservice } from '@/app/services/pedidoService';
 import { useRouter } from 'next/navigation';
 import { tokenService } from '@/app/services/tokenService';
 import { TokenData } from '@/app/interface/tokenData';
+import { userService } from '@/app/services/userService';
+import { UserResponseDTO } from '@/app/interface/UserResponseDTO';
+import { set } from 'zod';
 
 
 export default function BoxFront () {
@@ -28,6 +31,7 @@ export default function BoxFront () {
   const [isLoading, setIsLoading] = useState(false);
   const [total, setTotal] = useState(0);
   const tokenData = useRef<TokenData>({} as TokenData);
+  const userData = useRef<UserResponseDTO>({} as UserResponseDTO);
   const router = useRouter();
 
   const getProductsByCategory = async (category: string) => {
@@ -47,6 +51,16 @@ export default function BoxFront () {
     }
   };
 
+  const getConsumidorFinal = async () => {
+    try {
+      const response = await userService.getConsumidorFinal();
+      console.log(JSON.stringify(response.data));
+      userData.current = response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const verifyToken = async () => {
     try {
       const token = await tokenService.retrieveTokenData();
@@ -56,7 +70,8 @@ export default function BoxFront () {
       }
 
       tokenData.current = token;
-
+      
+      getConsumidorFinal();
       getProductsByCategory('snacks');
     } catch (error) {
       console.log(error);
@@ -113,7 +128,7 @@ export default function BoxFront () {
 
     const order = pedidoservice.creationPedido(
       total,
-      tokenData.current.idUser,
+      userData.current.id,
       'DINHEIRO',
       itemService.converteItemDataToItemRequestDTO(items)
     );
@@ -176,6 +191,7 @@ export default function BoxFront () {
         handleOrderCancel={handleOrderCancel}
         handleConfirmOrder={handleConfirmOrder}
         operatorName={tokenData.current.username}
+        clientName={userData.current.nome}
       />
       
     </Container>

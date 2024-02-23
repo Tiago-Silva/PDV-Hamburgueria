@@ -1,16 +1,11 @@
 import { AxiosResponse } from 'axios';
-import { publicAxiosInstance } from './axiosConfig';
-import { UserRegisterData } from '../interface/UserRegisterData';
-import { LoginResponseMobilleDTO } from '../interface/LoginResponseDTO';
+import { authenticatedAxiosInstance } from './axiosConfig';
+import { UserResponseDTO } from '../interface/UserResponseDTO';
 
 export const userService = {
 
-  saveUserRegisterAndAuthentication: async (
-    userData: UserRegisterData
-  ): Promise<AxiosResponse<LoginResponseMobilleDTO>> => {
-    const response = await publicAxiosInstance.post('/auth/register', userData);
-    // await SecureStorage.setItem(storageKey + 'token', JSON.stringify(response.data));
+  getConsumidorFinal: async (): Promise<AxiosResponse<UserResponseDTO>> => {
+    const response = await authenticatedAxiosInstance.get('/user/getConsumidorFinal');
     return response;
-  }
-
+  },
 }

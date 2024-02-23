@@ -21,6 +21,7 @@ interface Props {
   itemList: ItemData[];
   total: number;
   operatorName: string;
+  clientName: string;
   handleOrderCancel: () => void;
   handleConfirmOrder: () => void;
 }
@@ -29,6 +30,7 @@ export const BoxToalizers = ({
   itemList,
   total,
   operatorName,
+  clientName,
   handleOrderCancel,
   handleConfirmOrder
 }: Props) => {
@@ -38,7 +40,7 @@ export const BoxToalizers = ({
       <Header>
 
         <WrapperTitles>
-          <HeaderTitle>Cliente: Cliente final</HeaderTitle>
+          <HeaderTitle>Cliente: {clientName}</HeaderTitle>
           <HeaderTitle>Operador: {operatorName}</HeaderTitle>
         </WrapperTitles>
 
