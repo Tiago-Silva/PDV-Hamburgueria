@@ -43,5 +43,25 @@ authenticatedAxiosInstance.interceptors.request.use(
   }
 );
 
+authenticatedAxiosInstance.interceptors.response.use(
+  (response) => {
+    // Se a resposta foi bem-sucedida, simplesmente retorne a resposta
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+
+      
+      // Se o status da resposta for 401 ou 403, o token expirou
+      // Redireciona o usuário para a tela de login
+      redirectToHome();
+      return Promise.reject(error);
+    }
+    // Se ocorreu um erro, faça algo com o erro
+    return Promise.reject(error);
+  }
+);
+
 
 export { authenticatedAxiosInstance, publicAxiosInstance };
