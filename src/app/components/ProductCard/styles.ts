@@ -25,6 +25,7 @@ export const Container = styled.div`
 export const Title = styled.h3`
   color: #FFFFFF;
   font-size: 1.4vw;
+  text-align: center;
 `;
 
 export const Amount = styled.h3`
