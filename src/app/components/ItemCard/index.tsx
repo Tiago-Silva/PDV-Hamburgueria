@@ -11,6 +11,8 @@ import {
   WrapperInfo
 } from './styles';
 import { ItemData } from '../../interface/ItemData';
+import { useAppDispatch } from '@/app/store/modules/hooks';
+import { reduceItemFromCart } from '@/app/store/modules/cart/actions';
 
 interface Props {
   item: ItemData;
@@ -19,8 +21,15 @@ interface Props {
 export const ItemCard = ({
   item
 }: Props) => {
+  const dispatch = useAppDispatch();
+
+  const handleRemoveItem = () => {
+    // console.log('remove item');
+    dispatch(reduceItemFromCart(item));
+  };
+
   return (
-    <Container >
+    <Container onClick={handleRemoveItem}>
       <Content>
         <WrapperInfo>
           <Icon />

@@ -9,6 +9,13 @@ export const Container = styled.div`
 
   /* margin-top: 5px; */
   /* padding: 10px; */
+  cursor: pointer;
+
+  transition: box-shadow 0.8s ease;
+
+  &:active {
+    box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.5) inset;
+  }
 `;
 
 export const Content = styled.div`
