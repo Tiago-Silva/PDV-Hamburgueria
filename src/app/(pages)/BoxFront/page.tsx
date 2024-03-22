@@ -1,5 +1,5 @@
 'use client';
-import React, { use, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import {
   Container, 
@@ -16,23 +16,22 @@ import { ProductData } from '@/app/interface/ProductData';
 import { productService } from '@/app/services/productService';
 import { Loading } from '@/app/components/Loading';
 import { itemService } from '@/app/services/itemService';
-import { pedidoservice } from '@/app/services/pedidoService';
 import { useRouter } from 'next/navigation';
 import { tokenService } from '@/app/services/tokenService';
 import { TokenData } from '@/app/interface/tokenData';
 import { userService } from '@/app/services/userService';
 import { UserResponseDTO } from '@/app/interface/UserResponseDTO';
-import { set } from 'zod';
+import { useAppDispatch } from '@/app/store/modules/hooks';
+import { addItemToCart, clearCart } from '@/app/store/modules/cart/actions';
 
 
 export default function BoxFront () {
   const [products, setProducts] = useState<ProductData[]>([]);
-  const [items, setItems] = useState<ItemData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [total, setTotal] = useState(0);
   const tokenData = useRef<TokenData>({} as TokenData);
   const userData = useRef<UserResponseDTO>({} as UserResponseDTO);
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const getProductsByCategory = async (category: string) => {
     setIsLoading(true);
@@ -104,21 +103,16 @@ export default function BoxFront () {
       product.urlImage
     );
     
-    setItems(prevItems => {
-      const {updatedItems, total} =  itemService.handleUpdateItems(prevItems, item);
-      setTotal(total);
-      return updatedItems;
-    });
+    dispatch(addItemToCart(item));
   }
 
   const handleOrderCancel = () => {
-    setItems([]);
-    setTotal(0);
+    dispatch(clearCart());
     setIsLoading(false);
   }
 
-  const handleConfirmOrder = async () => {
-    setIsLoading(true);
+  const handleConfirmOrder = async (value: boolean) => {
+    setIsLoading(value);
 
     if (!tokenData) {
       alert('Seção expirda, por favor faça login novamente');
@@ -126,15 +120,7 @@ export default function BoxFront () {
       throw new Error('Token not found');
     }
 
-    const order = pedidoservice.creationPedido(
-      total,
-      userData.current.id,
-      'DINHEIRO',
-      itemService.converteItemDataToItemRequestDTO(items)
-    );
-
-    pedidoservice.save(order);
-    handleOrderCancel();
+    if (!value) dispatch(clearCart());
   }
 
   return (
@@ -186,12 +172,10 @@ export default function BoxFront () {
       </LeftContainer>
 
       <BoxToalizers 
-        itemList={items}
-        total={total}
         handleOrderCancel={handleOrderCancel}
-        handleConfirmOrder={handleConfirmOrder}
+        handleConfirmOrderIsLoading={handleConfirmOrder}
         operatorName={tokenData.current.username}
-        clientName={userData.current.nome}
+        user={userData.current}
       />
       
     </Container>

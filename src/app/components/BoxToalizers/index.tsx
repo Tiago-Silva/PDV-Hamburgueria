@@ -16,31 +16,48 @@ import {
 import { ItemData } from '@/app/interface/ItemData';
 import { ItemCard } from '../ItemCard';
 import { Buttom } from '../Buttom';
+import { useSelector } from 'react-redux';
+import { IState } from '@/app/store/modules/cart/types';
+import { pedidoservice } from '@/app/services/pedidoService';
+import { UserResponseDTO } from '@/app/interface/UserResponseDTO';
+import { itemService } from '@/app/services/itemService';
 
 interface Props {
-  itemList: ItemData[];
-  total: number;
   operatorName: string;
-  clientName: string;
+  user: UserResponseDTO;
   handleOrderCancel: () => void;
-  handleConfirmOrder: () => void;
+  handleConfirmOrderIsLoading: (value: boolean) => void;
 }
 
 export const BoxToalizers = ({
-  itemList,
-  total,
   operatorName,
-  clientName,
+  user,
   handleOrderCancel,
-  handleConfirmOrder
+  handleConfirmOrderIsLoading
 }: Props) => {
+  const items = useSelector<IState, ItemData[]>(state => state.cart.items);
+  const total = items.reduce((sum, item) => sum + item.total, 0);
+
+  const handleConfirmOrder = async () => {
+    handleConfirmOrderIsLoading(true);
+    const order = pedidoservice.creationPedido(
+      total,
+      user.id,
+      'DINHEIRO',
+      itemService.converteItemDataToItemRequestDTO(items)
+    );
+
+    pedidoservice.save(order);
+    handleConfirmOrderIsLoading(false);
+  }
+
   return (
     <Container>
 
       <Header>
 
         <WrapperTitles>
-          <HeaderTitle>Cliente: {clientName}</HeaderTitle>
+          <HeaderTitle>Cliente: {user.nome}</HeaderTitle>
           <HeaderTitle>Operador: {operatorName}</HeaderTitle>
         </WrapperTitles>
 
@@ -49,7 +66,7 @@ export const BoxToalizers = ({
       </Header>
 
       <Content>
-        {itemList.map((item, index) => (
+        {items.map((item, index) => (
           <ItemCard key={index} item={item} />
         ))}
       </Content>
@@ -75,7 +92,7 @@ export const BoxToalizers = ({
           <Buttom 
             backgroundColor='#E83F5B'
             borderColor='#E83F5B'
-            isDisabled={itemList.length === 0}
+            isDisabled={items.length === 0}
             title='Cancelar'
             onClick={handleOrderCancel}
           />
@@ -84,7 +101,7 @@ export const BoxToalizers = ({
         <Buttom 
           backgroundColor='#12A454'
           borderColor='#12A454'
-          isDisabled={itemList.length === 0}
+          isDisabled={items.length === 0}
           title='Confirmar pedido'
           onClick={handleConfirmOrder}
         />
