@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   Container, 
@@ -21,6 +21,7 @@ import { IState } from '@/app/store/modules/cart/types';
 import { pedidoservice } from '@/app/services/pedidoService';
 import { UserResponseDTO } from '@/app/interface/UserResponseDTO';
 import { itemService } from '@/app/services/itemService';
+import { PaymentCard } from '../PaymentCard';
 
 interface Props {
   operatorName: string;
@@ -37,13 +38,14 @@ export const BoxToalizers = ({
 }: Props) => {
   const items = useSelector<IState, ItemData[]>(state => state.cart.items);
   const total = items.reduce((sum, item) => sum + item.total, 0);
+  const [paymentType, setPaymentType] = useState('PIX');
 
   const handleConfirmOrder = async () => {
     handleConfirmOrderIsLoading(true);
     const order = pedidoservice.creationPedido(
       total,
       user.id,
-      'DINHEIRO',
+      paymentType,
       itemService.converteItemDataToItemRequestDTO(items)
     );
 
@@ -97,6 +99,11 @@ export const BoxToalizers = ({
             onClick={handleOrderCancel}
           />
         </WrapperButtons>
+
+        <PaymentCard 
+          paymentType={paymentType}
+          handlePaymentType={setPaymentType}
+        />
 
         <Buttom 
           backgroundColor='#12A454'
