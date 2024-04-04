@@ -23,6 +23,7 @@ import { userService } from '@/app/services/userService';
 import { UserResponseDTO } from '@/app/interface/UserResponseDTO';
 import { useAppDispatch } from '@/app/store/modules/hooks';
 import { addItemToCart, clearCart } from '@/app/store/modules/cart/actions';
+import {PedidoResponseDTO} from "@/app/interface/PedidoResponseDTO";
 
 
 export default function BoxFront () {
@@ -30,6 +31,7 @@ export default function BoxFront () {
   const [isLoading, setIsLoading] = useState(false);
   const tokenData = useRef<TokenData>({} as TokenData);
   const userData = useRef<UserResponseDTO>({} as UserResponseDTO);
+  const userDataList = useRef<UserResponseDTO[]>([] as UserResponseDTO[]);
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -50,11 +52,14 @@ export default function BoxFront () {
     }
   };
 
-  const getConsumidorFinal = async () => {
+  const getClients = async (
+      idestabelecimento: number,
+      type: string
+  ) => {
     try {
-      const response = await userService.getConsumidorFinal();
-      console.log(JSON.stringify(response.data));
-      userData.current = response.data;
+      const response = await userService.getClientsByType(idestabelecimento, type);
+      // userData.current = response.data;
+      userDataList.current = response.data;
     } catch (error) {
       console.log(error);
     }
@@ -69,8 +74,8 @@ export default function BoxFront () {
       }
 
       tokenData.current = token;
-      
-      getConsumidorFinal();
+
+      getClients(tokenData.current.idestabelecimento, 'MOBILLE');
       getProductsByCategory('snacks');
     } catch (error) {
       console.log(error);
@@ -121,6 +126,12 @@ export default function BoxFront () {
     }
 
     if (!value) dispatch(clearCart());
+  }
+
+  const handlePedidoResponseDTO = (response: PedidoResponseDTO) => {
+    response.items.map((item) => {
+      dispatch(addItemToCart(item));
+    })
   }
 
   return (
@@ -175,7 +186,8 @@ export default function BoxFront () {
         handleOrderCancel={handleOrderCancel}
         handleConfirmOrderIsLoading={handleConfirmOrder}
         operatorName={tokenData.current.username}
-        user={userData.current}
+        userList={userDataList.current}
+        handlePedidoResponseDTO={handlePedidoResponseDTO}
       />
       
     </Container>

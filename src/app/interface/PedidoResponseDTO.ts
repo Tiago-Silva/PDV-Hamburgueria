@@ -9,5 +9,6 @@ export interface PedidoResponseDTO {
   total: number;
   iduser: string;
   tipoPagamento: string;
+  status: string;
   items: Array<ItemData>;
 }
