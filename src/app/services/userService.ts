@@ -8,4 +8,13 @@ export const userService = {
     const response = await authenticatedAxiosInstance.get('/user/getConsumidorFinal');
     return response;
   },
+
+  getClientsByType: async (
+      idestabelecimento: number,
+      type: string
+  ): Promise<AxiosResponse<UserResponseDTO[]>> => {
+    const response = await authenticatedAxiosInstance
+        .get('/user/getUsers/' + idestabelecimento + '/' + type);
+    return response;
+  },
 }
