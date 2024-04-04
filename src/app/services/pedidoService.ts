@@ -12,12 +12,14 @@ export const pedidoservice = {
     total: number,
     iduser: string,
     tipoPagamento: string,
+    status: string,
     items: Array<ItemRequestDTO>,
   ): PedidoData => {
     return {
       total: total,
       iduser: iduser,
       tipoPagamento: tipoPagamento,
+      status: status,
       itemRequestDTOS: items,
     }
   },
@@ -33,13 +35,21 @@ export const pedidoservice = {
       throw error;
     }
   },
+
+  getPedidoPendenteByIdUser: async (
+      iduser: string,
+  ): Promise<AxiosResponse<PedidoResponseDTO>> => {
+    const response = await authenticatedAxiosInstance
+        .get('/pedido/getPendenteByIdUser/' + iduser);
+    return response;
+  },
   
   getPedidoByUserId: async (
     userId: string
   ): Promise<AxiosResponse<PedidoResponseDTO[]>> => {
     const response = await authenticatedAxiosInstance.get('/pedido/getPedidosByUser', {
       headers: {
-        iduser: userId
+        'iduser': userId
       }
     });
     return response;
