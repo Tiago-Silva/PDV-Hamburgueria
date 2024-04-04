@@ -13,15 +13,15 @@ export const cart: Reducer<ICartState, CartActions> = (state = INITIAL_STATE, ac
         const actionWithPayload = actions as AddItemToCartAction;
         const { item } = actionWithPayload.payload;
 
-        const itemInCartIndex = draft.items.findIndex(cartItem => 
+        const itemInCartIndex = draft["items"].findIndex(cartItem =>
           cartItem.idproduto === item.idproduto
         );
 
         if (itemInCartIndex >= 0) {
-          draft.items[itemInCartIndex].quantidade++;
-          draft.items[itemInCartIndex].total = draft.items[itemInCartIndex].quantidade * draft.items[itemInCartIndex].valor;
+          draft["items"][itemInCartIndex].quantidade++;
+          draft["items"][itemInCartIndex].total = draft["items"][itemInCartIndex].quantidade * draft["items"][itemInCartIndex].valor;
         } else {
-          draft.items.push(item);
+          draft["items"].push(item);
         }
 
         break;
@@ -30,12 +30,12 @@ export const cart: Reducer<ICartState, CartActions> = (state = INITIAL_STATE, ac
         const actionWithPayload = actions as AddItemToCartAction;
         const { item } = actionWithPayload.payload;
 
-        const itemInCartIndex = draft.items.findIndex(cartItem => 
+        const itemInCartIndex = draft["items"].findIndex(cartItem =>
           cartItem.idproduto === item.idproduto
         );
 
         if (itemInCartIndex >= 0) {
-          draft.items.splice(itemInCartIndex, 1);
+          draft["items"].splice(itemInCartIndex, 1);
         }
 
         break;
@@ -44,25 +44,25 @@ export const cart: Reducer<ICartState, CartActions> = (state = INITIAL_STATE, ac
         const actionWithPayload = actions as AddItemToCartAction;
         const { item } = actionWithPayload.payload;
 
-        const itemInCartIndex = draft.items.findIndex(cartItem => 
+        const itemInCartIndex = draft["items"].findIndex(cartItem =>
           cartItem.idproduto === item.idproduto
         );
 
         if (itemInCartIndex >= 0) {
-          draft.items[itemInCartIndex].quantidade--;
+          draft["items"][itemInCartIndex].quantidade--;
 
-          if (draft.items[itemInCartIndex].quantidade <= 0) {
-            draft.items.splice(itemInCartIndex, 1);
+          if (draft["items"][itemInCartIndex].quantidade <= 0) {
+            draft["items"].splice(itemInCartIndex, 1);
             return;
           }
           
-          draft.items[itemInCartIndex].total = draft.items[itemInCartIndex].quantidade * draft.items[itemInCartIndex].valor;
+          draft["items"][itemInCartIndex].total = draft["items"][itemInCartIndex].quantidade * draft["items"][itemInCartIndex].valor;
         }
 
         break;
       }
       case ActionTypes.CLEAR_CART: {
-        draft.items = [];
+        draft["items"].length = 0;
         break;
       }
       default:
