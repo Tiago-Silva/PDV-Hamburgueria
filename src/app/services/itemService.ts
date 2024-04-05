@@ -33,7 +33,7 @@ export const itemService = {
       updatedItems.push(item);
     }
 
-    const total = updatedItems.reduce((sum, item) => sum + item.total, 0);
+    const total = updatedItems.reduce((sum, item) => sum + (item.total || 0), 0);
 
     return {updatedItems, total};
   },
@@ -52,7 +52,7 @@ export const itemService = {
     return {
       ...prevItem,
       quantidade: prevItem.quantidade + newItem.quantidade,
-      total: prevItem.valor * (prevItem.quantidade + newItem.quantidade)
+      total: (prevItem.valor || 0) * (prevItem.quantidade + newItem.quantidade)
     };
   },
 
@@ -72,7 +72,7 @@ export const itemService = {
         itemsArray[indexEncontrado] = {
           ...itemsArray[indexEncontrado],
           quantidade: itemsArray[indexEncontrado].quantidade + item.quantidade,
-          total: itemsArray[indexEncontrado].quantidade * itemsArray[indexEncontrado].valor,
+          total: itemsArray[indexEncontrado].quantidade * (itemsArray[indexEncontrado].valor || 0),
         };
 
       } else {
@@ -110,7 +110,7 @@ export const itemService = {
         itemsArray[indexEncontrado] = {
           ...itemsArray[indexEncontrado],
           quantidade: itemsArray[indexEncontrado].quantidade - item.quantidade,
-          total: itemsArray[indexEncontrado].quantidade * itemsArray[indexEncontrado].valor,
+          total: itemsArray[indexEncontrado].quantidade * (itemsArray[indexEncontrado].valor || 0),
         };
 
       }

@@ -19,7 +19,7 @@ export const cart: Reducer<ICartState, CartActions> = (state = INITIAL_STATE, ac
 
         if (itemInCartIndex >= 0) {
           draft["items"][itemInCartIndex].quantidade++;
-          draft["items"][itemInCartIndex].total = draft["items"][itemInCartIndex].quantidade * draft["items"][itemInCartIndex].valor;
+          draft["items"][itemInCartIndex].total = draft["items"][itemInCartIndex].quantidade * (draft["items"][itemInCartIndex].valor || 0);
         } else {
           draft["items"].push(item);
         }
@@ -56,7 +56,7 @@ export const cart: Reducer<ICartState, CartActions> = (state = INITIAL_STATE, ac
             return;
           }
           
-          draft["items"][itemInCartIndex].total = draft["items"][itemInCartIndex].quantidade * draft["items"][itemInCartIndex].valor;
+          draft["items"][itemInCartIndex].total = draft["items"][itemInCartIndex].quantidade * (draft["items"][itemInCartIndex].valor || 0);
         }
 
         break;
