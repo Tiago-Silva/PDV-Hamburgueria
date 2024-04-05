@@ -32,7 +32,7 @@ interface Props {
   userList: UserResponseDTO[];
   handleOrderCancel: () => void;
   handleConfirmOrderIsLoading: (value: boolean) => void;
-  handlePedidoResponseDTO: (PedidoResponseDTO) => void;
+  handlePedidoResponseDTO: (pedido: PedidoResponseDTO) => void;
 }
 
 const mesas = [
