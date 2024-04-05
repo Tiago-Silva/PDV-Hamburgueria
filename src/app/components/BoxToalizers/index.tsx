@@ -56,10 +56,11 @@ export const BoxToalizers = ({
   handlePedidoResponseDTO
 }: Props) => {
   const items = useSelector<IState, ItemData[]>(state => state.cart.items);
-  const total = items.reduce((sum, item) => sum + item.total, 0);
+  const total = items.reduce((sum, item) => sum + (item.total || 0), 0);
   const [paymentType, setPaymentType] = useState('PIX');
   const mesaRef = useRef('');
   const userRef = useRef<UserResponseDTO>({} as UserResponseDTO);
+  const pedidoRef = useRef<PedidoResponseDTO>({} as PedidoResponseDTO);
 
   const handleConfirmOrder = async (status: string) => {
     if (!userRef.current.id) {
@@ -71,11 +72,13 @@ export const BoxToalizers = ({
       total,
       userRef.current.id,
       paymentType,
-        status,
-      itemService.converteItemDataToItemRequestDTO(items)
+      status,
+      items,
+      pedidoRef.current.idpedido,
+      pedidoRef.current.data
     );
 
-    pedidoservice.save(order);
+    pedidoservice.saveOrUpdate(order);
     handleConfirmOrderIsLoading(false);
   }
 
@@ -87,7 +90,8 @@ export const BoxToalizers = ({
     const response =
         await pedidoservice.getPedidoPendenteByIdUser(userRef.current.id);
 
-    console.log(JSON.stringify(response.data));
+    pedidoRef.current = response.data;
+
     handlePedidoResponseDTO(response.data);
   }
 
