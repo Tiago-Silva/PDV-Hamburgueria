@@ -39,7 +39,7 @@ export const ItemCard = ({
               {new Intl.NumberFormat('pt-BR', {
                 style: 'currency',
                 currency: 'BRL'
-              }).format(item.valor) }
+              }).format(item.valor || 0) }
             </InfoValue>
           </Info>
         </WrapperInfo>
@@ -47,7 +47,7 @@ export const ItemCard = ({
           {new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL'
-          }).format(item.total) }
+          }).format(item.total || 0) }
         </Total>
       </Content>
       <StyledHr />

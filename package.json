@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "tauri": "tauri dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
