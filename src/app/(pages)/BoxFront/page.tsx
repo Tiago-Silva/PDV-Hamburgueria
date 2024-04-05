@@ -129,10 +129,10 @@ export default function BoxFront () {
   }
 
   const handlePedidoResponseDTO = (response: PedidoResponseDTO) => {
-    if (!response) {
+    if (!response || !response.itemsReponseDTO) {
       dispatch(clearCart());
+      return;
     }
-    console.log(response);
     response.itemsReponseDTO.map((item) => {
       dispatch(addItemToCart(item));
     })
