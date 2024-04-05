@@ -30,7 +30,6 @@ export default function BoxFront () {
   const [products, setProducts] = useState<ProductData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const tokenData = useRef<TokenData>({} as TokenData);
-  const userData = useRef<UserResponseDTO>({} as UserResponseDTO);
   const userDataList = useRef<UserResponseDTO[]>([] as UserResponseDTO[]);
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -70,13 +69,12 @@ export default function BoxFront () {
       const token = await tokenService.retrieveTokenData();
       if (!token) {
         router.push('/');
-        throw new Error('Token not found');
+      } else {
+        tokenData.current = token;
+
+        getClients(tokenData.current.idestabelecimento, 'MOBILLE');
+        getProductsByCategory('snacks');
       }
-
-      tokenData.current = token;
-
-      getClients(tokenData.current.idestabelecimento, 'MOBILLE');
-      getProductsByCategory('snacks');
     } catch (error) {
       console.log(error);
     }
