@@ -16,7 +16,7 @@ interface Props {
   handleAddItem: () => void;
 }
 
-export const ProductCard = React.memo (({
+const ProductCardComponent = ({
   idproduto,
   title,
   amount,
@@ -49,4 +49,8 @@ export const ProductCard = React.memo (({
       </Amount>
     </Container>
   );
-});
+};
+
+ProductCardComponent.displayName = 'ProductCard';
+
+export const ProductCard = React.memo(ProductCardComponent);

@@ -12,7 +12,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   isDisabled: boolean;
 }
 
-export const Buttom = React.memo (({
+const ButtomComponent = ({
   title,
   borderColor,
   backgroundColor,
@@ -30,4 +30,8 @@ export const Buttom = React.memo (({
       <Title>{title}</Title>
     </Container>
   );
-});
+};
+
+ButtomComponent.displayName = 'Buttom';
+
+export const Buttom = React.memo(ButtomComponent);

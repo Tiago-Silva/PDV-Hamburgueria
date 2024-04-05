@@ -1,10 +1,10 @@
 import React from "react";
-import { 
-  Container, 
-  IconCredit, 
-  IconMoney, 
-  IconPix, 
-  TouchIcon, 
+import {
+  Container,
+  IconCredit,
+  IconMoney,
+  IconPix,
+  TouchIcon,
 } from "./styles";
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
   handlePaymentType: (paymentType: string) => void;
 }
 
-export const PaymentCard = React.memo (({
+const PaymentCardComponent = ({
   paymentType,
   handlePaymentType
 }: Props) => {
@@ -38,4 +38,8 @@ export const PaymentCard = React.memo (({
       </TouchIcon>
     </Container>
   );
-});
+}
+
+PaymentCardComponent.displayName = 'PaymentCard';
+
+export const PaymentCard = React.memo(PaymentCardComponent);
