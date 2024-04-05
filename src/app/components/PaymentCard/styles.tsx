@@ -3,7 +3,7 @@ import { FaPix } from "react-icons/fa6";
 import styled, { css } from "styled-components";
 
 interface WrapperIconProps {
-  isSelected: boolean;
+  $isSelected: boolean;
 }
 
 export const Container = styled.div`
@@ -31,8 +31,8 @@ export const TouchIcon = styled.button<WrapperIconProps>`
 
   transition: background-color 0.3s ease-in-out;
   
-  ${({ isSelected }: WrapperIconProps) => 
-    isSelected && css`
+  ${({ $isSelected }: WrapperIconProps) => 
+    $isSelected && css`
       background-color: ${({ theme }) => theme.colors.text};
     ` 
   };

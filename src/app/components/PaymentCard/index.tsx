@@ -20,19 +20,19 @@ export const PaymentCard = React.memo (({
     <Container>
       <TouchIcon
         onClick={() => handlePaymentType('DINHEIRO')}
-        isSelected={paymentType === 'DINHEIRO'}
+        $isSelected={paymentType === 'DINHEIRO'}
       >
         <IconMoney />
       </TouchIcon>
       <TouchIcon
         onClick={() => handlePaymentType('CREDITO')}
-        isSelected={paymentType === 'CREDITO'}
+        $isSelected={paymentType === 'CREDITO'}
       >
         <IconCredit/>
       </TouchIcon>
       <TouchIcon
         onClick={() => handlePaymentType('PIX')}
-        isSelected={paymentType === 'PIX'}
+        $isSelected={paymentType === 'PIX'}
       >
         <IconPix />
       </TouchIcon>
