@@ -48,15 +48,13 @@ export const pedidoservice = {
         .get('/pedido/getPendenteByIdUser/' + iduser);
     return response;
   },
-  
-  getPedidoByUserId: async (
-    userId: string
+
+  getPedidosEstablishmentByStatus: async (
+    idestabelecimento: number,
+    status: string
   ): Promise<AxiosResponse<PedidoResponseDTO[]>> => {
-    const response = await authenticatedAxiosInstance.get('/pedido/getPedidosByUser', {
-      headers: {
-        'iduser': userId
-      }
-    });
+    const response =
+        await authenticatedAxiosInstance.get('/pedido/getEstablishmentByStatus/' + idestabelecimento + '/' + status);
     return response;
   },
 

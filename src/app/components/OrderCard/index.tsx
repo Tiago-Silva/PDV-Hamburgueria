@@ -14,6 +14,7 @@ import {
 import RadioBoxList from "../RadioBoxList";
 import {ItemCard} from "@/app/components/ItemCard";
 import {ItemData} from "@/app/interface/ItemData";
+import {PedidoResponseDTO} from "@/app/interface/PedidoResponseDTO";
 
 const item: ItemData = {
     iditem: 1,
@@ -26,12 +27,18 @@ const item: ItemData = {
     urlImage: ''
 };
 
-const OrderCar = () => {
+interface Props {
+    pedido: PedidoResponseDTO;
+}
+
+const OrderCar = ({
+    pedido
+}: Props) => {
     return (
         <Container>
             <WrapperContentAll>
                 <Header>
-                    <Title>Client name - DELIVERY (ID: 7895)</Title>
+                    <Title>Client name - nome (ID: {pedido.idpedido})</Title>
                     <RadioBoxList />
                 </Header>
 
@@ -44,11 +51,11 @@ const OrderCar = () => {
                             </WrapperInfo>
                             <WrapperInfo>
                                 <Label>Data:</Label>
-                                <DetailValue>12/03/2024</DetailValue>
+                                <DetailValue>{pedido.data}</DetailValue>
                             </WrapperInfo>
                             <WrapperInfo>
                                 <Label>Hora:</Label>
-                                <DetailValue>20:33:25</DetailValue>
+                                <DetailValue>{pedido.data}</DetailValue>
                             </WrapperInfo>
                             <WrapperInfo>
                                 <Label>Telefone:</Label>
@@ -67,7 +74,7 @@ const OrderCar = () => {
                         <Detail>
                             <WrapperInfo>
                                 <Label>Total dos itens:</Label>
-                                <DetailValue>R$ 35,00</DetailValue>
+                                <DetailValue>{pedido.total}</DetailValue>
                             </WrapperInfo>
                             <WrapperInfo>
                                 <Label>Taxa de entrega:</Label>
@@ -79,11 +86,11 @@ const OrderCar = () => {
                             </WrapperInfo>
                             <WrapperInfo>
                                 <Label>Total:</Label>
-                                <DetailValue>R$ 40,00</DetailValue>
+                                <DetailValue>{pedido.total}</DetailValue>
                             </WrapperInfo>
                             <WrapperInfo>
                                 <Label>Forma de pagamento:</Label>
-                                <DetailValue>Dinheiro</DetailValue>
+                                <DetailValue>{pedido.tipoPagamento}</DetailValue>
                             </WrapperInfo>
                             <WrapperInfo>
                                     <Label>Troco para:</Label>
@@ -95,10 +102,12 @@ const OrderCar = () => {
                     </WrapperDetails>
 
                     <Divisor />
-
-                    <ItemCard
-                        item={item}
-                    />
+                    {pedido.itemsReponseDTO.map((item, index) => (
+                        <ItemCard
+                            key={index}
+                            item={item}
+                        />
+                    ))}
                 </Content>
             </WrapperContentAll>
         </Container>

@@ -5,6 +5,8 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     padding: 20px;
+    max-height: 100vh;
+    overflow-y: scroll;
 `;
 
 export const Title = styled.h1`
