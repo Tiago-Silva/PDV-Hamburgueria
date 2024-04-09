@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container} from "@/app/components/OrderCardList/styles";
+import {Container} from "@/app/components/StatusOrderCardList/styles";
 import {StatusOrderCard} from "@/app/components/StatusOrderCard";
 
 const statusOrderCards = [
@@ -12,7 +12,7 @@ const statusOrderCards = [
     { quantidade: 2, title: "Cancelados", background: "attention" },
 ];
 
-const OrderCardList = () => {
+const StatusOrderCardList = () => {
     return (
         <Container>
             {statusOrderCards.map((statusOrderCard, index) => (
@@ -27,4 +27,4 @@ const OrderCardList = () => {
     );
 };
 
-export default OrderCardList;
+export default StatusOrderCardList;
