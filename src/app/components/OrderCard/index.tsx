@@ -12,20 +12,8 @@ import {
     WrapperInfo
 } from "@/app/components/OrderCard/styles";
 import RadioBoxList from "../RadioBoxList";
-import {ItemCard} from "@/app/components/ItemCard";
-import {ItemData} from "@/app/interface/ItemData";
 import {PedidoResponseDTO} from "@/app/interface/PedidoResponseDTO";
-
-const item: ItemData = {
-    iditem: 1,
-    quantidade: 2,
-    descricao: 'Lanche geral',
-    valor: 15.00,
-    total: 30.00,
-    idproduto: 10,
-    idpedido: 1,
-    urlImage: ''
-};
+import OrderItemCard from "@/app/components/OrderItemCard";
 
 interface Props {
     pedido: PedidoResponseDTO;
@@ -38,8 +26,11 @@ const OrderCar = ({
         <Container>
             <WrapperContentAll>
                 <Header>
-                    <Title>Client name - nome (ID: {pedido.idpedido})</Title>
-                    <RadioBoxList />
+                    <Title>Cliente: {pedido.userName} (PEDIDO: {pedido.idpedido})</Title>
+                    <RadioBoxList
+                        idpedido={pedido.idpedido || 0}
+                        status={pedido.status}
+                    />
                 </Header>
 
                 <Content>
@@ -102,12 +93,10 @@ const OrderCar = ({
                     </WrapperDetails>
 
                     <Divisor />
-                    {pedido.itemsReponseDTO.map((item, index) => (
-                        <ItemCard
-                            key={index}
-                            item={item}
-                        />
-                    ))}
+
+                    <OrderItemCard
+                        idpedido={pedido.idpedido || 0}
+                    />
                 </Content>
             </WrapperContentAll>
         </Container>

@@ -86,12 +86,3 @@ export const Divisor = styled.hr`
     
     margin: 20px 0 20px 0; 
 `;
-
-export const ContentItems = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 20px;
-    
-    background-color: ${props => props.theme.colors.background_card};
-`;
