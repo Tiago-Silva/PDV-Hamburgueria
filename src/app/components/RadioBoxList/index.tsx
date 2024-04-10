@@ -3,24 +3,33 @@ import {Container} from "@/app/components/RadioBoxList/styles";
 import RadioBox from "../RadioBox";
 
 const statusOrderCards = [
-    { quantidade: 2, title: "Recebidos", background: "title" },
-    { quantidade: 2, title: "Aceitos", background: "primary" },
-    { quantidade: 2, title: "Cozinha", background: "secondary" },
-    { quantidade: 2, title: "Prontos", background: "secondary_light" },
-    { quantidade: 2, title: "Enviados", background: "success_light" },
-    { quantidade: 2, title: "Finalizados", background: "success" },
-    { quantidade: 2, title: "Cancelados", background: "attention" },
+    { quantidade: 2, title: "RECEBIDO", background: "title" },
+    { quantidade: 2, title: "ACEITO", background: "primary" },
+    { quantidade: 2, title: "COZINHA", background: "secondary" },
+    { quantidade: 2, title: "PRONTO", background: "secondary_light" },
+    { quantidade: 2, title: "ENVIADO", background: "success_light" },
+    { quantidade: 2, title: "FINALIZADO", background: "success" },
+    { quantidade: 2, title: "CANCELADO", background: "attention" },
 ];
 
-const RadioBoxList = () => {
-    const [selectedValue, setSelectedValue] = useState("");
+interface Props {
+    idpedido: number;
+    status: string;
+}
+
+const RadioBoxList = ({
+    idpedido,
+    status
+  }: Props) => {
+    const [selectedValue, setSelectedValue] = useState(status);
 
     return (
         <Container>
             {statusOrderCards.map((statusOrderCard, index) => (
                 <RadioBox
                     key={index}
-                    title={statusOrderCard.title}
+                    title={statusOrderCard.title + 'S'}
+                    name={idpedido.toString()}
                     checked={selectedValue === statusOrderCard.title}
                     onChange={() => setSelectedValue(statusOrderCard.title)}
                 />

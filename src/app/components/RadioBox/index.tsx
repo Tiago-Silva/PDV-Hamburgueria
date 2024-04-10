@@ -3,12 +3,14 @@ import {Check, Container, Title} from "@/app/components/RadioBox/styles";
 
 interface Props {
     title: string;
+    name: string;
     checked: boolean;
     onChange: () => void;
 }
 
 const RadioBox = ({
     title,
+    name,
     checked,
     onChange
 }: Props) => {
@@ -16,7 +18,7 @@ const RadioBox = ({
         <Container>
             <Check
                 type="radio"
-                name="radioBox"
+                name={name}
                 checked={checked}
                 onChange={onChange}
             />
