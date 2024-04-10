@@ -3,16 +3,22 @@ import {Container} from "@/app/components/StatusOrderCardList/styles";
 import {StatusOrderCard} from "@/app/components/StatusOrderCard";
 
 const statusOrderCards = [
-    { quantidade: 2, title: "Recebidos", background: "title" },
-    { quantidade: 2, title: "Aceitos", background: "primary" },
-    { quantidade: 2, title: "Cozinha", background: "secondary" },
-    { quantidade: 2, title: "Prontos", background: "secondary_light" },
-    { quantidade: 2, title: "Enviados", background: "success_light" },
-    { quantidade: 2, title: "Finalizados", background: "success" },
-    { quantidade: 2, title: "Cancelados", background: "attention" },
+    { quantidade: 2, title: "RECEBIDO", background: "title" },
+    { quantidade: 2, title: "ACEITO", background: "primary" },
+    { quantidade: 2, title: "COZINHA", background: "secondary" },
+    { quantidade: 2, title: "PRONTO", background: "secondary_light" },
+    { quantidade: 2, title: "ENVIADO", background: "success_light" },
+    { quantidade: 2, title: "FINALIZADO", background: "success" },
+    { quantidade: 2, title: "CANCELADO", background: "attention" },
 ];
 
-const StatusOrderCardList = () => {
+interface Props {
+    handleSelecStatus: (status: string) => void;
+}
+
+const StatusOrderCardList = ({
+    handleSelecStatus
+}: Props) => {
     return (
         <Container>
             {statusOrderCards.map((statusOrderCard, index) => (
@@ -21,6 +27,7 @@ const StatusOrderCardList = () => {
                     quantidade={statusOrderCard.quantidade}
                     title={statusOrderCard.title}
                     background={statusOrderCard.background}
+                    handleSelecStatus={handleSelecStatus}
                 />
             ))}
         </Container>

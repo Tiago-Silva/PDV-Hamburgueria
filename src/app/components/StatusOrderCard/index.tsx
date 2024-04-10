@@ -4,22 +4,23 @@ import {
   Title, 
 } from "./styles";
 import React from "react";
-import Image from "next/image";
 
 interface Props {
   quantidade: number;
   title: string;
   background: string;
+  handleSelecStatus: (status: string) => void;
 }
 
 const StatusOrderCardComponent = ({
     quantidade,
     title,
-    background
+    background,
+    handleSelecStatus
 }: Props) => {
 
   return (
-    <Container $background={background}>
+    <Container $background={background} onClick={() => handleSelecStatus(title)}>
       <DefaultIcon name='food' />
       <Title>{quantidade}</Title>
       <Title>{title}</Title>
