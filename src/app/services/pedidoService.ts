@@ -5,6 +5,7 @@ import { itemService } from "./itemService";
 import { ItemRequestDTO } from "../interface/itemRequestDTO";
 import { PedidoResponseDTO } from "../interface/PedidoResponseDTO";
 import {ItemData} from "@/app/interface/ItemData";
+import {PedidoStatusDTO} from "@/app/interface/PedidoStatusDTO";
 
 
 export const pedidoservice = {
@@ -55,6 +56,14 @@ export const pedidoservice = {
   ): Promise<AxiosResponse<PedidoResponseDTO[]>> => {
     const response =
         await authenticatedAxiosInstance.get('/pedido/getEstablishmentByStatus/' + idestabelecimento + '/' + status);
+    return response;
+  },
+
+  getTotalOrdesByStatus: async (
+      idestabelecimento: number,
+  ): Promise<AxiosResponse<PedidoStatusDTO[]>> => {
+    const response =
+        await authenticatedAxiosInstance.get('/pedido/getTotalOrdesByStatus/' + idestabelecimento);
     return response;
   },
 

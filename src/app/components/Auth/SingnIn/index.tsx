@@ -37,7 +37,7 @@ export const SingnIn = () => {
         throw new Error('Login ou senha inválidos');
       }
       
-      await router.push('/BoxFront');
+      await router.push('/Delivery');
 
       setTimeout(() => {
         setIsLoading(false);

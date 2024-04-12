@@ -6,9 +6,12 @@ import StatusOrderCardList from "../../components/StatusOrderCardList";
 import OrderCard from "@/app/components/OrderCard";
 import {pedidoservice} from "@/app/services/pedidoService";
 import {PedidoResponseDTO} from "@/app/interface/PedidoResponseDTO";
+import {PedidoStatusDTO} from "@/app/interface/PedidoStatusDTO";
+import {tokenService} from "@/app/services/tokenService";
 
 const Delivery = () => {
     const [pedidos, setPedidos] = useState<PedidoResponseDTO[]>([]);
+    const [pedidoStatus, setPedidoStatus] = useState<PedidoStatusDTO[]>([]);
 
     const getPedidosEstablishmentByStatus = async (
         idestabelecimento: number,
@@ -24,15 +27,45 @@ const Delivery = () => {
         }
     };
 
+    const getTotalOrdesByStatus = async (
+        idestabelecimento: number
+    ) => {
+        try {
+            const response = await pedidoservice.getTotalOrdesByStatus(idestabelecimento);
+            setPedidoStatus(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleSelecStatus = (status: string) => {
+        getPedidosEstablishmentByStatus(1, status).then(() => {});
+    };
+
     useEffect(() => {
-        getPedidosEstablishmentByStatus(1, 'FINALIZADO');
+        verifyToken();
     }, []);
+
+    const verifyToken = async () => {
+        try {
+            const token = await tokenService.retrieveTokenData();
+            if (token) {
+                getTotalOrdesByStatus(token.idestabelecimento).then(() => {});
+                getPedidosEstablishmentByStatus(token.idestabelecimento, 'FINALIZADO').then(() => {});
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <Container>
             <Title>Delivery - acompanhe os pedidos</Title>
 
-            <StatusOrderCardList />
+            <StatusOrderCardList
+                totalOrdersStatus={pedidoStatus}
+                handleSelecStatus={handleSelecStatus}
+            />
             {pedidos.map((pedido) => (
                 <OrderCard pedido={pedido} key={pedido.idpedido}/>
             ))}
