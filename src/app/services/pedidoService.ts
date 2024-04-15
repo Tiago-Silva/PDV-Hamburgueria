@@ -1,8 +1,6 @@
-import { PedidoData } from "../interface/PedidoData"
 import { AxiosResponse } from 'axios';
 import { authenticatedAxiosInstance } from './axiosConfig';
 import { itemService } from "./itemService";
-import { ItemRequestDTO } from "../interface/itemRequestDTO";
 import { PedidoResponseDTO } from "../interface/PedidoResponseDTO";
 import {ItemData} from "@/app/interface/ItemData";
 import {PedidoStatusDTO} from "@/app/interface/PedidoStatusDTO";
@@ -34,7 +32,7 @@ export const pedidoservice = {
     newOrder: PedidoResponseDTO
   ) => {
     try {
-      const response = await authenticatedAxiosInstance.post('/pedido/saveOrUpdate', newOrder);
+      await authenticatedAxiosInstance.post('/pedido/saveOrUpdate', newOrder);
       itemService.deleteListItem();
     } catch (error) {
       console.error('Erro ao salvar o pedido:', error);
