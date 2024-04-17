@@ -13,6 +13,7 @@ export const pedidoservice = {
     iduser: string,
     tipoPagamento: string,
     status: string,
+    type: string,
     items: Array<ItemData>,
     idpedido?: number,
     data?: string,
@@ -24,6 +25,7 @@ export const pedidoservice = {
       iduser: iduser,
       tipoPagamento: tipoPagamento,
       status: status,
+      type: type,
       itemsReponseDTO: items,
     }
   },

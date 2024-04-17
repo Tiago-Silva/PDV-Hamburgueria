@@ -73,6 +73,7 @@ export const BoxToalizers = ({
       userRef.current.id,
       paymentType,
       status,
+      'PDV',
       items,
       pedidoRef.current.idpedido,
       pedidoRef.current.data

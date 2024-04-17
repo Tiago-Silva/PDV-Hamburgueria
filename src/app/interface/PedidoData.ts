@@ -6,5 +6,6 @@ export interface PedidoData {
   iduser: string;
   tipoPagamento: string;
   status: string;
+  type: string;
   itemRequestDTOS: Array<ItemRequestDTO>;
 }
