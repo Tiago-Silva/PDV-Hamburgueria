@@ -23,7 +23,6 @@ import { useSelector } from 'react-redux';
 import { IState } from '@/app/store/modules/cart/types';
 import { pedidoservice } from '@/app/services/pedidoService';
 import { UserResponseDTO } from '@/app/interface/UserResponseDTO';
-import { itemService } from '@/app/services/itemService';
 import { PaymentCard } from '../PaymentCard';
 import {PedidoResponseDTO} from "@/app/interface/PedidoResponseDTO";
 
