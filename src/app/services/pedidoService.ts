@@ -42,6 +42,18 @@ export const pedidoservice = {
     }
   },
 
+  updateStatusPedido: async (
+      newOrder: PedidoResponseDTO
+  ) => {
+    try {
+      await authenticatedAxiosInstance.put('/pedido/updateStatusPedido', newOrder);
+      itemService.deleteListItem();
+    } catch (error) {
+      console.error('Erro ao alterar o pedido:', error);
+      throw error;
+    }
+  },
+
   getPedidoPendenteByIdUser: async (
       iduser: string,
   ): Promise<AxiosResponse<PedidoResponseDTO>> => {

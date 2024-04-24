@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {
     Container,
     Content,
     Detail,
-    DetailValue, Divisor,
+    DetailValue, Divisor, Footer,
     Header,
     Label,
-    Title,
+    Title, WrapperButton,
     WrapperContentAll,
     WrapperDetails,
     WrapperInfo
@@ -14,6 +14,8 @@ import {
 import RadioBoxList from "../RadioBoxList";
 import {PedidoResponseDTO} from "@/app/interface/PedidoResponseDTO";
 import OrderItemCard from "@/app/components/OrderItemCard";
+import {Buttom} from "@/app/components/Buttom";
+import {pedidoservice} from "@/app/services/pedidoService";
 
 interface Props {
     pedido: PedidoResponseDTO;
@@ -22,6 +24,27 @@ interface Props {
 const OrderCar = ({
     pedido
 }: Props) => {
+    const statusRef = useRef(pedido.status);
+
+    const handleUpdateOrder = async () => {
+        await pedidoservice.updateStatusPedido(
+            pedidoservice.creationPedido(
+                pedido.total,
+                pedido.iduser,
+                pedido.tipoPagamento,
+                statusRef.current,
+                pedido.type,
+                pedido.itemsReponseDTO,
+                pedido.idpedido,
+                pedido.data,
+            )
+        );
+    };
+
+    const handleChangeStatus = (status: string) => {
+        statusRef.current = status;
+    }
+
     return (
         <Container>
             <WrapperContentAll>
@@ -30,6 +53,7 @@ const OrderCar = ({
                     <RadioBoxList
                         idpedido={pedido.idpedido || 0}
                         status={pedido.status}
+                        handleChangeStatus={handleChangeStatus}
                     />
                 </Header>
 
@@ -89,14 +113,22 @@ const OrderCar = ({
                             </WrapperInfo>
                         </Detail>
 
-
                     </WrapperDetails>
 
                     <Divisor />
 
-                    <OrderItemCard
-                        idpedido={pedido.idpedido || 0}
-                    />
+                    <Footer>
+                        <OrderItemCard
+                            idpedido={pedido.idpedido || 0}
+                        />
+                        <Buttom
+                            title='Alterar'
+                            borderColor='#FF872C'
+                            backgroundColor='#FF872C'
+                            isDisabled={false}
+                            onClick={handleUpdateOrder}
+                        />
+                    </Footer>
                 </Content>
             </WrapperContentAll>
         </Container>

@@ -15,23 +15,30 @@ const statusOrderCards = [
 interface Props {
     idpedido: number;
     status: string;
+    handleChangeStatus: (status: string) => void;
 }
 
 const RadioBoxList = ({
     idpedido,
-    status
+    status,
+    handleChangeStatus
   }: Props) => {
     const [selectedValue, setSelectedValue] = useState(status);
+
+    const handleSelectStatus = (status: string) => {
+        setSelectedValue(status);
+        handleChangeStatus(status);
+    }
 
     return (
         <Container>
             {statusOrderCards.map((statusOrderCard, index) => (
                 <RadioBox
                     key={index}
-                    title={statusOrderCard.title + 'S'}
+                    title={statusOrderCard.title}
                     name={idpedido.toString()}
                     checked={selectedValue === statusOrderCard.title}
-                    onChange={() => setSelectedValue(statusOrderCard.title)}
+                    onChange={() => handleSelectStatus(statusOrderCard.title)}
                 />
             ))}
         </Container>

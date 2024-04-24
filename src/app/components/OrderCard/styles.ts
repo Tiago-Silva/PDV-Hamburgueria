@@ -86,3 +86,16 @@ export const Divisor = styled.hr`
     
     margin: 20px 0 20px 0; 
 `;
+
+export const WrapperButton = styled.div`
+    display: flex;
+    width: 70px;
+    height: 40px;
+`;
+
+export const Footer = styled.div`
+    display: flex;
+    flex-direction: row;
+    
+    //justify-content: space-around;
+`;

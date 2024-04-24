@@ -13,7 +13,7 @@ export default {
       attention: '#E83F5B',
       attention_light: 'rgba(232, 63, 91, 0.5)',
 
-      sidebar: '#363637',
+      sidebar: '#30353c',
 
       shape: '#FFFFFF',
       title: '#FFE600',
