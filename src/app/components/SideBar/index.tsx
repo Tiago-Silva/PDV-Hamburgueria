@@ -29,7 +29,7 @@ const SideBar = ({
     onLinkClick
 }: Props) => {
     const [isActive, setIsActive] = useState('');
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     const handleOnClick = (link: string) => {
         onLinkClick(link);
