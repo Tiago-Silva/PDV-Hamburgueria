@@ -18,4 +18,6 @@ export const Title = styled.h1`
     color: ${props => props.theme.colors.text_dark};
     margin-top: 20px;
     margin-bottom: 30px;
+
+    margin-left: 1vw;
 `;
