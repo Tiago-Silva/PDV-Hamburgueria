@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useState} from 'react';
 import {
     Container,
     Content,
@@ -6,7 +6,7 @@ import {
     DetailValue, Divisor, Footer,
     Header,
     Label,
-    Title, WrapperButton,
+    Title,
     WrapperContentAll,
     WrapperDetails,
     WrapperInfo
@@ -24,7 +24,7 @@ interface Props {
 const OrderCar = ({
     pedido
 }: Props) => {
-    const statusRef = useRef(pedido.status);
+    const [status, setStatus] = useState(pedido.status);
 
     const handleUpdateOrder = async () => {
         await pedidoservice.updateStatusPedido(
@@ -32,7 +32,7 @@ const OrderCar = ({
                 pedido.total,
                 pedido.iduser,
                 pedido.tipoPagamento,
-                statusRef.current,
+                status,
                 pedido.type,
                 pedido.itemsReponseDTO,
                 pedido.idpedido,
@@ -41,10 +41,6 @@ const OrderCar = ({
         );
     };
 
-    const handleChangeStatus = (status: string) => {
-        statusRef.current = status;
-    }
-
     return (
         <Container>
             <WrapperContentAll>
@@ -52,8 +48,8 @@ const OrderCar = ({
                     <Title>Cliente: {pedido.userName} (PEDIDO: {pedido.idpedido})</Title>
                     <RadioBoxList
                         idpedido={pedido.idpedido || 0}
-                        status={pedido.status}
-                        handleChangeStatus={handleChangeStatus}
+                        status={status}
+                        handleChangeStatus={setStatus}
                     />
                 </Header>
 
@@ -125,7 +121,7 @@ const OrderCar = ({
                             title='Alterar'
                             borderColor='#FF872C'
                             backgroundColor='#FF872C'
-                            isDisabled={false}
+                            isDisabled={status === pedido.status}
                             onClick={handleUpdateOrder}
                         />
                     </Footer>
