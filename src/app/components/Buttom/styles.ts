@@ -10,6 +10,7 @@ export const Container = styled.button<Props>`
   display: flex;
   justify-content: center;
   align-items: center;
+  max-height: 40px;
   flex-shrink: 0;
   /* border-radius: 20px; */
   border: 1px solid ${(props) => props.$borderColor};
