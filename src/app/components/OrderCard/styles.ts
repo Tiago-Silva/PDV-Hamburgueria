@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
+interface  HeaderProps {
+    $background: string;
+}
 
 export const Container = styled.div`
     display: flex;
@@ -16,7 +19,7 @@ export const WrapperContentAll = styled.div`
     width: 80%;
 `;
 
-export const Header = styled.div`
+export const Header = styled.div<HeaderProps>`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -25,7 +28,7 @@ export const Header = styled.div`
     
     height: 40px;
     
-    background-color: ${props => props.theme.colors.background_header};
+    background-color: ${({ theme, $background }) => theme.colors[$background]};
 `;
 
 export const Title = styled.h1`

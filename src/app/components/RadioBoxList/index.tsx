@@ -1,26 +1,19 @@
 import React from 'react';
 import {Container} from "@/app/components/RadioBoxList/styles";
 import RadioBox from "../RadioBox";
-
-const statusOrderCards = [
-    { quantidade: 0, title: "RECEBIDO", background: "title" },
-    { quantidade: 0, title: "PREPARADO", background: "primary" },
-    { quantidade: 0, title: "PRONTO", background: "secondary" },
-    { quantidade: 0, title: "ENVIADO", background: "secondary_light" },
-    { quantidade: 0, title: "ENTREGUE", background: "success_light" },
-    { quantidade: 0, title: "CANCELADO", background: "success" },
-    { quantidade: 0, title: "FINALIZADO", background: "attention" },
-];
+import {StatusOrderCardData} from "@/app/interface/StatusOrderCardData";
 
 interface Props {
     idpedido: number;
     status: string;
+    statusOrderCards: StatusOrderCardData[];
     handleChangeStatus: (status: string) => void;
 }
 
 const RadioBoxList = ({
     idpedido,
     status,
+    statusOrderCards,
     handleChangeStatus
   }: Props) => {
     const handleSelectStatus = (status: string) => {

@@ -17,6 +17,16 @@ import OrderItemCard from "@/app/components/OrderItemCard";
 import {Buttom} from "@/app/components/Buttom";
 import {pedidoservice} from "@/app/services/pedidoService";
 
+const statusOrderCards = [
+    { title: "RECEBIDO", background: "text" },
+    { title: "PREPARADO", background: "secondary" },
+    { title: "PRONTO", background: "secondary_light" },
+    { title: "ENVIADO", background: "success_light" },
+    { title: "ENTREGUE", background: "primary" },
+    { title: "CANCELADO", background: "attention" },
+    { title: "FINALIZADO", background: "success" },
+];
+
 interface Props {
     pedido: PedidoResponseDTO;
 }
@@ -41,14 +51,20 @@ const OrderCar = ({
         );
     };
 
+    const getBackgroundColor = (status: string) => {
+        const statusCard = statusOrderCards.find(card => card.title === status);
+        return statusCard ? statusCard.background : 'sidebar';
+    };
+
     return (
         <Container>
             <WrapperContentAll>
-                <Header>
+                <Header $background={getBackgroundColor(pedido.status)}>
                     <Title>Cliente: {pedido.userName} (PEDIDO: {pedido.idpedido})</Title>
                     <RadioBoxList
                         idpedido={pedido.idpedido || 0}
                         status={status}
+                        statusOrderCards={statusOrderCards}
                         handleChangeStatus={setStatus}
                     />
                 </Header>
