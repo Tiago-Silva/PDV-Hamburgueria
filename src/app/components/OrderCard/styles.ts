@@ -40,13 +40,10 @@ export const Title = styled.h1`
 export const Content = styled.div`
     display: flex;
     flex-direction: column;
-    //height: 100px;
     
     padding: 20px;
     
     background-color: ${props => props.theme.colors.shape};
-    
-    //border: 1px solid ${props => props.theme.colors.shape};
 `;
 
 export const WrapperDetails = styled.div`
@@ -90,15 +87,7 @@ export const Divisor = styled.hr`
     margin: 20px 0 20px 0; 
 `;
 
-export const WrapperButton = styled.div`
-    display: flex;
-    width: 70px;
-    height: 40px;
-`;
-
 export const Footer = styled.div`
     display: flex;
     flex-direction: row;
-    
-    //justify-content: space-around;
 `;

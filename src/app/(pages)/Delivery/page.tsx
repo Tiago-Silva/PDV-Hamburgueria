@@ -9,7 +9,13 @@ import {PedidoResponseDTO} from "@/app/interface/PedidoResponseDTO";
 import {PedidoStatusDTO} from "@/app/interface/PedidoStatusDTO";
 import {tokenService} from "@/app/services/tokenService";
 
-const Delivery = () => {
+interface PageDeliveryProps {
+    handleIsLoading: (isLoading: boolean) => void;
+}
+
+const Delivery = ({
+    handleIsLoading
+}: PageDeliveryProps) => {
     const [pedidos, setPedidos] = useState<PedidoResponseDTO[]>([]);
     const [pedidoStatus, setPedidoStatus] = useState<PedidoStatusDTO[]>([]);
 
@@ -20,8 +26,6 @@ const Delivery = () => {
         try {
             const response = await pedidoservice.getPedidosEstablishmentByStatus(idestabelecimento, status);
             setPedidos(response.data);
-            // userData.current = response.data;
-            // userDataList.current = response.data;
         } catch (error) {
             console.log(error);
         }
@@ -43,20 +47,40 @@ const Delivery = () => {
     };
 
     useEffect(() => {
-        verifyToken();
+        verifyToken('FINALIZADO');
     }, []);
 
-    const verifyToken = async () => {
+    const verifyToken = async (status: string) => {
+        handleIsLoading(true);
         try {
             const token = await tokenService.retrieveTokenData();
             if (token) {
                 getTotalOrdesByStatus(token.idestabelecimento).then(() => {});
-                getPedidosEstablishmentByStatus(token.idestabelecimento, 'FINALIZADO').then(() => {});
+                getPedidosEstablishmentByStatus(token.idestabelecimento, status).then(() => {});
             }
         } catch (error) {
             console.log(error);
+        } finally {
+            handleIsLoading(false);
         }
     };
+
+    const handleUpdateOrder = async (status: string, pedido: PedidoResponseDTO) => {
+        handleIsLoading(true);
+        await pedidoservice.updateStatusPedido(
+            pedidoservice.creationPedido(
+                pedido.total,
+                pedido.iduser,
+                pedido.tipoPagamento,
+                status,
+                pedido.type,
+                pedido.itemsReponseDTO,
+                pedido.idpedido,
+                pedido.data,
+            )
+        );
+        verifyToken(status);
+    }
 
     return (
         <Container>
@@ -67,7 +91,11 @@ const Delivery = () => {
                 handleSelecStatus={handleSelecStatus}
             />
             {pedidos.map((pedido) => (
-                <OrderCard pedido={pedido} key={pedido.idpedido}/>
+                <OrderCard
+                    pedido={pedido}
+                    key={pedido.idpedido}
+                    handleUpdateOrder={(value) => handleUpdateOrder(value, pedido)}
+                />
             ))}
         </Container>
     );

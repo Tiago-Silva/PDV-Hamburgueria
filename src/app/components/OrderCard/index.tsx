@@ -15,7 +15,6 @@ import RadioBoxList from "../RadioBoxList";
 import {PedidoResponseDTO} from "@/app/interface/PedidoResponseDTO";
 import OrderItemCard from "@/app/components/OrderItemCard";
 import {Buttom} from "@/app/components/Buttom";
-import {pedidoservice} from "@/app/services/pedidoService";
 
 const statusOrderCards = [
     { title: "RECEBIDO", background: "text" },
@@ -29,26 +28,17 @@ const statusOrderCards = [
 
 interface Props {
     pedido: PedidoResponseDTO;
+    handleUpdateOrder: (status: string) => void;
 }
 
 const OrderCar = ({
-    pedido
+    pedido,
+    handleUpdateOrder
 }: Props) => {
     const [status, setStatus] = useState(pedido.status);
 
-    const handleUpdateOrder = async () => {
-        await pedidoservice.updateStatusPedido(
-            pedidoservice.creationPedido(
-                pedido.total,
-                pedido.iduser,
-                pedido.tipoPagamento,
-                status,
-                pedido.type,
-                pedido.itemsReponseDTO,
-                pedido.idpedido,
-                pedido.data,
-            )
-        );
+    const handleUpdate = async () => {
+        handleUpdateOrder(status);
     };
 
     const getBackgroundColor = (status: string) => {
@@ -138,7 +128,7 @@ const OrderCar = ({
                             borderColor='#FF872C'
                             backgroundColor='#FF872C'
                             isDisabled={status === pedido.status}
-                            onClick={handleUpdateOrder}
+                            onClick={handleUpdate}
                         />
                     </Footer>
                 </Content>
