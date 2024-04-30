@@ -43,7 +43,14 @@ const SideBar = ({
     return (
         <Container $isShow={open}>
             <Header>
-                <HomeIcon />
+                <LinkMenu
+                    title='DashBoard'
+                    page='Home'
+                    isActive={isActive === 'Home'}
+                    handleOnClick={handleOnClick}
+                    icon={<HomeIcon />}
+                    isShow={open}
+                />
                 <WrapperIconClose onClick={handleCloseSidBar}>
                     {open ? <Close /> : <Open />}
                 </WrapperIconClose>

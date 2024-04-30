@@ -8,7 +8,7 @@ import styled from "styled-components";
 
 
 export const HomeIcon = styled(AiOutlineHome)`
-    font-size: 2rem;
+    font-size: 1.3rem;
     color: ${({ theme }) => theme.colors.text}
 `;
 
@@ -33,10 +33,10 @@ export const DeliveryIcon = styled(MdDeliveryDining)`
 
 export const Open = styled(BiChevronRightSquare)`
     font-size: 1.3rem;
-    color: ${({ theme }) => theme.colors.text}
+    color: ${({ theme }) => theme.colors.iconCloseOpen}
 `;
 
 export const Close = styled(BiChevronLeftSquare)`
     font-size: 1.3rem;
-    color: ${({ theme }) => theme.colors.text}
+    color: ${({ theme }) => theme.colors.iconCloseOpen}
 `;

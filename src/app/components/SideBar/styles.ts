@@ -5,6 +5,23 @@ interface SidBarProps {
     $isShow: boolean;
 }
 
+export const WrapperIconClose = styled.button`
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    
+    margin-left: -12px;
+    margin-bottom: -8vh;
+    
+    visibility: hidden;
+    transform: translateX(-100%);
+    transition: transform 0.3s linear, visibility 0.3s linear;
+`;
+
 export const Container = styled.aside<SidBarProps>`
     display: flex;
     flex-direction: column;
@@ -27,6 +44,13 @@ export const Container = styled.aside<SidBarProps>`
         !$isShow && css`
             width: 2.5vw;
         `
+    }
+
+    &:hover {
+        ${WrapperIconClose} {
+            visibility: visible;
+            transform: translateX(0);
+        }
     }
 `;
 
@@ -57,14 +81,4 @@ export const Content = styled.div`
     margin-top: 15px;
     
     gap: 20px;
-`;
-
-export const WrapperIconClose = styled.button`
-    background: none;
-    color: inherit;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit;
 `;
